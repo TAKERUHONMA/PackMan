@@ -1,9 +1,11 @@
 #pragma once
 #include "Engine/GameObject.h"
+
 class Player :
     public GameObject
 {
 	int hPlayer_;
+	float speed_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

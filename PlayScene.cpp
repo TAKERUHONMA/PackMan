@@ -1,5 +1,6 @@
 #include "PlayScene.h"
 #include "Stage.h"
+#include "Player.h"
 
 PlayScene::PlayScene(GameObject* parent)
 	:GameObject(parent, "PlayScene")
@@ -9,6 +10,8 @@ PlayScene::PlayScene(GameObject* parent)
 void PlayScene::Initialize()
 {
 	Instantiate<Stage>(this);
+	Instantiate<Player>(this);
+
 }
 
 void PlayScene::Update()
