@@ -111,6 +111,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Character</Filter>
     </ClCompile>
+    <ClCompile Include="Gauge.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -190,6 +193,9 @@
       <Filter>Stage</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauge.h">
       <Filter>Character</Filter>
     </ClInclude>
   </ItemGroup>

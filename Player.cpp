@@ -5,11 +5,11 @@
 #include "Stage.h"
 
 namespace {
-	const float PLAYER_MOVE_SPEED{ 1.0f }; //スピード
+	const float PLAYER_MOVE_SPEED{ 5.0f / 60.0f }; //スピード
 }
 
 Player::Player(GameObject* parent)
-	:GameObject(parent, "Player"),hPlayer_(-1),speed_(PLAYER_MOVE_SPEED)
+	:GameObject(parent, "Player"),hPlayer_(-1),speed_(PLAYER_MOVE_SPEED),pStage_(nullptr)
 {
 }
 
@@ -19,6 +19,7 @@ void Player::Initialize()
 	assert(hPlayer_ >= 0);
 	transform_.position_.x = 0.5;
 	transform_.position_.z = 1.5;
+	pStage_ = (Stage*)FindObject("Stage");
 }
 
 void Player::Update()
@@ -53,27 +54,50 @@ void Player::Update()
 	}
 
 	XMVECTOR pos = XMLoadFloat3(&(transform_.position_));
-	pos = pos + speed_ * move;
+	XMVECTOR posTmp = XMVectorZero(); //ゼロベクトルで初期化
+	posTmp = pos + speed_ * move;
 
-	Debug::Log("(X, Y)=");
-	Debug::Log(XMVectorGetX(pos));
-	Debug::Log(",");
-	Debug::Log(XMVectorGetX(pos),true);
+	//Debug::Log("(X, Z)=");
+	//Debug::Log(XMVectorGetX(pos));
+	//Debug::Log(",");
+	//Debug::Log(XMVectorGetZ(pos),true);
+	int tx, ty;
+	tx = (int)(XMVectorGetX(posTmp) + 1.0f);
+	ty = pStage_->GetStageWidth() - XMVectorGetZ(posTmp);
+	if (!(pStage_->IsWall(tx, ty)))
+	{
+		pos = posTmp;
+	}
+	//Debug::Log("(!X, !Z)=");
+	//Debug::Log(tx);
+	//Debug::Log(",");
+	//Debug::Log(ty, true);
 
 	if (!XMVector3Equal(move, XMVectorZero()))
 	{
 		XMStoreFloat3(&(transform_.position_), pos);
+		//XMMATRIX rot = XMMatrixRotationY(-XM_PIDIV2);
+		//XMVECTOR modifiedVec = XMPlaneTransform(move, rot);
+		//Debug::Log(XMVectorGetX(modifiedVec));
+		//Debug::Log(",");
+		//Debug::Log(XMVectorGetZ(modifiedVec), true);
 
-		XMVECTOR vdot = XMVector3Dot(vFront, move);
-		assert(XMVectorGetX(vdot) <= 1 && XMVectorGetX(vdot) <= 1);
+		//XMVECTOR vdot = XMVector3Dot(vFront, move);
+		//assert(XMVectorGetX(vdot) <= 1 && XMVectorGetX(vdot) <= 1);
 
-		float angle = acos(XMVectorGetX(vdot));
+		float angle = atan2(XMVectorGetX(move), XMVectorGetZ(move));
 
-		XMVECTOR vCross = XMVector3Cross(vFront, move);
-		if (XMVectorGetY(vCross) < 0)
-		{
-			angle *= -1;
-		}
+		Debug::Log("=>");
+		Debug::Log(XMConvertToDegrees(angle), true);
+
+		//float angle = acos(XMVectorGetX(vdot));
+
+		//XMVECTOR vCross = XMVector3Cross(vFront, move);
+		//if (XMVectorGetY(vCross) < 0)
+		//{
+		//	angle *= -1;
+		//}
+
 		transform_.rotate_.y = XMConvertToDegrees(angle);
 	}
 }
