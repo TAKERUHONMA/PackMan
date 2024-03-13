@@ -29,7 +29,7 @@ public:
 	void SetGaugeVal(int _crr, int _max)
 	{
 		gaugeMaxVal_ = _max;
-		gaugeMaxVal_ = _crr;
+		gaugeCrrVal_ = _crr;
 	}
 };
 

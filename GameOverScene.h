@@ -1,8 +1,13 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/Text.h"
+
+class Text;
 class GameOverScene
 	:public GameObject
 {
+	Text* pText;
+	int hOver_;
 public:
 	//コンストラクタ
 //引数：parent  親オブジェクト（SceneManager）

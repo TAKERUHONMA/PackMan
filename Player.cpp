@@ -78,9 +78,12 @@ void Player::Update()
 		hpCrr_ = hpCrr_ - 2;
 		if (hpCrr_ < 0)
 			hpCrr_ = 0;
-		//if (hpCrr_ == 0)
-		//	pText->Draw(500, 500, "GAME OVER");
-		//	pScene_->ChangeScene(SCENE_ID_GAMEOVER);
+		if (hpCrr_ == 0)
+		{
+			SceneManager* pSM = (SceneManager*)FindObject("SceneManager");
+			pSM->ChangeScene(SCENE_ID_GAMEOVER);
+		}
+
 	}
 
 	//Debug::Log("(!X, !Z)=");

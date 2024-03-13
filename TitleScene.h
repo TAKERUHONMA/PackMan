@@ -4,6 +4,7 @@
 class TitleScene
 	:public GameObject
 {
+	int hTitle_;
 	Text* pText;
 public:
 	//コンストラクタ
