@@ -2,15 +2,15 @@
 #include "Engine/Image.h"
 
 Gauge::Gauge(GameObject* parent)
-	:GameObject(parent, "Gauge"),hGaugeBar_(-1),hGaugeFrame_(-1),gaugeMaxVal_(0),gaugeCrrVal_(0)
+	:GameObject(parent, "Gauge"),hGaugeBar_(-1),hGaugeFrame_(-1),gaugeMaxVal_(200),gaugeCrrVal_(100)
 {
 }
 
 void Gauge::Initialize()
 {
-	hGaugeBar_ = Image::Load("gauge.png");
+	hGaugeBar_ = Image::Load("HP.png");
 	assert(hGaugeBar_ >= 0);
-	hGaugeFrame_ = Image::Load("gauge.png");
+	hGaugeFrame_ = Image::Load("HPber.png");
 	assert(hGaugeFrame_ >= 0);
 
 	transform_.position_.x = 0.0f;
@@ -23,8 +23,12 @@ void Gauge::Update()
 
 void Gauge::Draw()
 {
-	Image::SetTransform(hGaugeBar_, transform_);
+	Transform tr = transform_;
+	tr.scale_.x = (float)gaugeCrrVal_ / (float)gaugeMaxVal_;
+
+	Image::SetTransform(hGaugeBar_, tr);
 	Image::Draw(hGaugeBar_);
+
 	Image::SetTransform(hGaugeFrame_, transform_);
 	Image::Draw(hGaugeFrame_);
 }

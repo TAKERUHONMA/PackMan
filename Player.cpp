@@ -2,14 +2,17 @@
 #include "Engine/Model.h"
 #include "Engine/Input.h"
 #include "Engine/Debug.h"
+#include "Engine/Image.h"
+#include "Engine/SceneManager.h"
 #include "Stage.h"
+#include "Gauge.h"
 
 namespace {
 	const float PLAYER_MOVE_SPEED{ 5.0f / 60.0f }; //スピード
 }
 
 Player::Player(GameObject* parent)
-	:GameObject(parent, "Player"),hPlayer_(-1),speed_(PLAYER_MOVE_SPEED),pStage_(nullptr)
+	:GameObject(parent, "Player"),hPlayer_(-1),speed_(PLAYER_MOVE_SPEED),pStage_(nullptr), hpCrr_(100), hpMax_(100)
 {
 }
 
@@ -20,6 +23,9 @@ void Player::Initialize()
 	transform_.position_.x = 0.5;
 	transform_.position_.z = 1.5;
 	pStage_ = (Stage*)FindObject("Stage");
+
+	//pText = new Text;
+	//pText->Initialize();
 }
 
 void Player::Update()
@@ -63,11 +69,20 @@ void Player::Update()
 	//Debug::Log(XMVectorGetZ(pos),true);
 	int tx, ty;
 	tx = (int)(XMVectorGetX(posTmp) + 1.0f);
-	ty = pStage_->GetStageWidth() - XMVectorGetZ(posTmp);
+	ty = pStage_->GetStageWidth() - (int)(XMVectorGetZ(posTmp) + 1.0f);
 	if (!(pStage_->IsWall(tx, ty)))
 	{
 		pos = posTmp;
 	}
+	else {
+		hpCrr_ = hpCrr_ - 2;
+		if (hpCrr_ < 0)
+			hpCrr_ = 0;
+		//if (hpCrr_ == 0)
+		//	pText->Draw(500, 500, "GAME OVER");
+		//	pScene_->ChangeScene(SCENE_ID_GAMEOVER);
+	}
+
 	//Debug::Log("(!X, !Z)=");
 	//Debug::Log(tx);
 	//Debug::Log(",");
@@ -88,7 +103,7 @@ void Player::Update()
 		float angle = atan2(XMVectorGetX(move), XMVectorGetZ(move));
 
 		Debug::Log("=>");
-		Debug::Log(XMConvertToDegrees(angle), true);
+		Debug::Log(XMConvertToDegrees(-angle), true);
 
 		//float angle = acos(XMVectorGetX(vdot));
 
@@ -100,6 +115,8 @@ void Player::Update()
 
 		transform_.rotate_.y = XMConvertToDegrees(angle);
 	}
+	Gauge* pGauge = (Gauge*)FindObject("Gauge");
+	pGauge->SetGaugeVal(hpCrr_, hpMax_);
 }
 
 void Player::Draw()

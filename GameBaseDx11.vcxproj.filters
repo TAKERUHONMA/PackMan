@@ -114,6 +114,12 @@
     <ClCompile Include="Gauge.cpp">
       <Filter>Character</Filter>
     </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -170,7 +176,6 @@
     <ClInclude Include="Engine\Transform.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Engine\Audio.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
@@ -197,6 +202,13 @@
     </ClInclude>
     <ClInclude Include="Gauge.h">
       <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h" />
+    <ClInclude Include="GameOverScene.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
